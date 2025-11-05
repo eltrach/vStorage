@@ -4,18 +4,18 @@ services:
       context: .
     container_name: nginx_uploads
     ports:
-      - "${HOST_PORT:-9181}:80"
+      - "9181:80"
     volumes:
       - type: bind
-        source: "${HOST_UPLOADS_PATH:-./uploads}"
+        source: ./uploads
         target: /srv/uploads
         read_only: true
       - type: bind
-        source: "${NGINX_CONFIG_PATH:-./nginx}/nginx.conf"
+        source: ./nginx/nginx.conf
         target: /etc/nginx/nginx.conf
         read_only: true
       - type: bind
-        source: "${NGINX_CONFIG_PATH:-./nginx}/conf.d"
+        source: ./nginx/conf.d
         target: /etc/nginx/conf.d
         read_only: true
     restart: unless-stopped
