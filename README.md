@@ -63,6 +63,7 @@ NGINX_CONFIG_PATH=/data/nginx-uploads
 
 - **Writers (Hono)** mount: `/data/uploads -> /srv/uploads:rw`
 - **Nginx** mounts: `/data/uploads -> /srv/uploads:ro`
+- **Healthcheck**: `/healthz` returns `ok` and is safe to expose to orchestrators
 
 ## Deployment in Coolify
 
@@ -98,6 +99,25 @@ Mount `/data/uploads` RW in your app services:
 - Mount: `/data/uploads` → `/srv/uploads:rw`
 - Upload endpoint writes to `/srv/uploads/...` with content-hashed filenames
 - Return URLs like: `https://ANY-OF-YOUR-DOMAINS/uploads/avatars/<userId>/<shard>/<hash>.webp`
+
+### Notes for Coolify Deployments
+
+- Coolify disallows variable substitution in bind-mount definitions. When you configure the container in the Coolify UI, enter absolute host paths directly (e.g. `/data/uploads:/srv/uploads:ro`). The provided `docker-compose.yml` uses relative paths for local development; adjust or override them when deploying.
+- Traefik handles TLS/hostnames, so you do **not** need to expose any ports on the container. The compose file maps `9181:80` purely for local testing—omit this in Coolify if Traefik is routing internally.
+
+## Local Docker Compose Usage
+
+For quick local tests:
+
+1. Create the folders the compose file expects:
+   ```bash
+   mkdir -p uploads nginx/conf.d
+   ```
+   (The repo already contains `nginx/conf.d/uploads.conf`; ensure `uploads/` exists.)
+2. Run `docker compose up --build`.
+3. Verify `http://localhost:9181/healthz` returns `ok`, then hit `http://localhost:9181/uploads/...` once you copy files into `uploads/`.
+
+Adjust the port mapping in `docker-compose.yml` if `9181` conflicts with something else on your dev machine.
 
 ## Why This Works for Every Domain
 

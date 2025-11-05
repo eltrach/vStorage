@@ -4,16 +4,11 @@ services:
       context: .
     container_name: nginx_uploads
     ports:
-      - "${HOST_PORT:-9181}:80"
+      - "9181:80"
     volumes:
-      - type: bind
-        source: "${HOST_UPLOADS_PATH:-./uploads}"
-        target: /srv/uploads
-        read_only: true
-      - type: bind
-        source: "${NGINX_CONFIG_PATH:-./nginx}"
-        target: /etc/nginx
-        read_only: true
+      - ./uploads:/srv/uploads:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost/healthz || exit 1"]
