@@ -7,7 +7,7 @@ services:
       # Map host port to container port 80 (adjust locally as needed)
       - "9181:80"
     volumes:
-      - ./uploads:/srv/uploads:ro
+      - ./public:/srv/public:ro
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
     restart: unless-stopped
