@@ -3,8 +3,8 @@ services:
     build:
       context: .
     container_name: nginx_uploads
-    ports:
-      - "80:80"
+    expose:
+      - "80"
     volumes:
       - ${HOST_UPLOADS_PATH:-./public}:/srv/public:ro
     restart: unless-stopped
@@ -14,3 +14,5 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
+    labels:
+      - "traefik.http.services.nginx-uploads.loadbalancer.server.port=80"
