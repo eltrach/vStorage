@@ -52,7 +52,6 @@ NGINX_CONFIG_PATH=/data/nginx-static
   files/
 
 # Optional Nginx config files (host-mounted)
-/data/nginx-static/nginx.conf
 /data/nginx-static/conf.d/site.conf
 ```
 
@@ -70,7 +69,6 @@ In Coolify, add a **Docker Container** (not an app proxy) with:
 - **Ports:** **none** (Traefik will route internally)
 - **Volumes:**
   - `/data/storage` → `/srv/public:ro`
-  - `/data/nginx-static/nginx.conf` → `/etc/nginx/nginx.conf:ro` *(optional – remove if you keep the baked-in config)*
   - `/data/nginx-static/conf.d/site.conf` → `/etc/nginx/conf.d/default.conf:ro`
 - **Networks:** attach it to the same network as Coolify's reverse proxy
 

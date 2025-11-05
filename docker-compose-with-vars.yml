@@ -6,9 +6,7 @@ services:
     ports:
       - "9181:80"
     volumes:
-      - ./public:/srv/public:ro
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ${HOST_UPLOADS_PATH:-./public}:/srv/public:ro
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost/healthz || exit 1"]
