@@ -11,3 +11,7 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
+    ports:
+      - "80"
+    labels:
+      - "traefik.http.services.nginx-uploads.loadbalancer.server.port=80"
