@@ -4,7 +4,7 @@ services:
       context: .
     container_name: nginx_uploads
     ports:
-      - "9181:80"
+      - "80:80"
     volumes:
       - ${HOST_UPLOADS_PATH:-./public}:/srv/public:ro
     restart: unless-stopped

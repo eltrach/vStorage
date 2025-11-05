@@ -18,8 +18,8 @@ A lightweight NGINX container that serves a single host directory at the root of
 Copy `.env.example` to `.env` and modify as needed:
 
 ```bash
-# Host port mapping (optional – defaults to 9181 for local dev)
-HOST_PORT=9181
+# Host port mapping (optional – defaults to 80 for local dev)
+HOST_PORT=80
 
 # Host path that will be mounted read-only under /srv/public
 HOST_PUBLIC_PATH=./public
@@ -91,7 +91,7 @@ Copy files into `/data/storage` (or whatever path you mount) using your deployme
 ### Notes for Coolify Deployments
 
 - Coolify disallows variable substitution in bind-mount definitions. Provide absolute paths (e.g. `/data/storage:/srv/public:ro`).
-- Traefik handles TLS/hostnames, so you do **not** need to expose ports on the container. The compose file maps `9181:80` purely for local testing—omit this in Coolify if Traefik routes internally.
+- Traefik handles TLS/hostnames, so you do **not** need to expose ports on the container. The compose file maps `80:80` purely for local testing—omit this in Coolify if Traefik routes internally.
 
 ## Local Docker Compose Usage
 
@@ -103,9 +103,9 @@ For quick local tests:
    ```
    (The repo already contains `nginx/conf.d/site.conf`; ensure `public/` exists.)
 2. Run `docker compose up --build`.
-3. Verify `http://localhost:9181/healthz` returns `ok`, then drop a test file into `public/` and load `http://localhost:9181/your-file.ext`.
+3. Verify `http://localhost:80/healthz` returns `ok`, then drop a test file into `public/` and load `http://localhost:80/your-file.ext`.
 
-Adjust the port mapping in `docker-compose.yml` if `9181` conflicts with something else on your dev machine.
+Adjust the port mapping in `docker-compose.yml` if `80` conflicts with something else on your dev machine.
 
 ## Why This Works for Any Domain
 
