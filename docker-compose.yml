@@ -2,6 +2,8 @@ services:
   nginx-uploads:
     build:
       context: .
+    ports:
+      - "${EXPORTED_PORT:-4444}:80"
     volumes:
       - ${HOST_UPLOADS_PATH:-./public}:/srv/public:ro
     restart: unless-stopped
