@@ -5,7 +5,7 @@ services:
     ports:
       - "${EXPORTED_PORT:-4444}:80"
     volumes:
-      - ${HOST_UPLOADS_PATH}:/srv/public:ro
+      - ${HOST_UPLOADS_PATH:-./public}:/srv/public:ro
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost/healthz || exit 1"]
